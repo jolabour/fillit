@@ -8,7 +8,7 @@ size_t		check_input(int argc, char **argv)
 	i = 0;
 	if (argc != 2)
 	{
-		ft_putstr("error\n");
+		ft_putstr("usage : fillit input_file\n");
 		return (0);
 	}
 	else
