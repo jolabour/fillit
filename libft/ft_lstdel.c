@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 01:57:16 by jolabour          #+#    #+#             */
-/*   Updated: 2017/11/30 08:25:33 by jolabour         ###   ########.fr       */
+/*   Created: 2017/11/20 00:46:03 by jolabour          #+#    #+#             */
+/*   Updated: 2017/11/21 06:49:43 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <fcntl.h>
-# define BUF_SIZE 21
+void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+{
+	t_list *tmp;
 
-//typedef struct	s_list1
-//{
-//	char	**tab;
-//	int		x;
-//	int		y;
-//	t_list	*next;
-//}				t_list1;
-
-int					test(char **argv);
-int					ft_check_validity(char *str);
-int					ft_check_tetra(char *str, const int tab[19][3]);
-#endif
+	while (*alst)
+	{
+		del((*alst)->content, (*alst)->content_size);
+		tmp = (*alst)->next;
+		free(*alst);
+		*alst = tmp;
+	}
+}

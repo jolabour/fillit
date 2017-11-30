@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 01:57:16 by jolabour          #+#    #+#             */
-/*   Updated: 2017/11/30 08:25:33 by jolabour         ###   ########.fr       */
+/*   Created: 2017/11/10 02:36:53 by jolabour          #+#    #+#             */
+/*   Updated: 2017/11/10 04:41:15 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
+char	*ft_strcpy(char *dest, char const *src)
+{
+	int i;
 
-# include "./libft/libft.h"
-# include <fcntl.h>
-# define BUF_SIZE 21
-
-//typedef struct	s_list1
-//{
-//	char	**tab;
-//	int		x;
-//	int		y;
-//	t_list	*next;
-//}				t_list1;
-
-int					test(char **argv);
-int					ft_check_validity(char *str);
-int					ft_check_tetra(char *str, const int tab[19][3]);
-#endif
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}

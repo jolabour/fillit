@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tab_test.c                                      :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/26 04:44:33 by jolabour          #+#    #+#             */
-/*   Updated: 2017/11/26 08:09:34 by jolabour         ###   ########.fr       */
+/*   Created: 2017/11/12 02:55:59 by jolabour          #+#    #+#             */
+/*   Updated: 2017/11/20 07:12:32 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
-#include <fcntl.h>
+#include "libft.h"
 
-char	*ft_buf(char **argv)
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	int ret;
-	int fd;
-	char buf[BUF_SIZE + 1];
-	char *str;
+	char	*str;
+	size_t	i;
 
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
+	if (!s)
+		return (NULL);
+	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+		return (0);
+	i = 0;
+	while (i < len)
 	{
-		ft_putstr("error\n");
-		return (NULL);
+		str[i] = s[start + i];
+		i++;
 	}
-	ret = read(fd, buf, BUF_SIZE);
-	buf[ret] = '\0';
-	if (!(str = (char *)malloc(sizeof(char) * ret)))
-		return (NULL);
-	ft_strcpy(str, buf);
-	if (close(fd) == -1)
-	{
-		ft_putstr("error\n");
-		return (NULL);
-	}
+	str[i] = '\0';
 	return (str);
 }

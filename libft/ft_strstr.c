@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 01:57:16 by jolabour          #+#    #+#             */
-/*   Updated: 2017/11/30 08:25:33 by jolabour         ###   ########.fr       */
+/*   Created: 2017/11/10 02:33:07 by jolabour          #+#    #+#             */
+/*   Updated: 2017/11/10 06:53:36 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <fcntl.h>
-# define BUF_SIZE 21
+char	*ft_strstr(char const *str, char const *to_find)
+{
+	int i;
+	int j;
+	int size;
 
-//typedef struct	s_list1
-//{
-//	char	**tab;
-//	int		x;
-//	int		y;
-//	t_list	*next;
-//}				t_list1;
-
-int					test(char **argv);
-int					ft_check_validity(char *str);
-int					ft_check_tetra(char *str, const int tab[19][3]);
-#endif
+	i = 0;
+	size = ft_strlen(to_find);
+	j = 0;
+	if (size == 0)
+		return ((char *)str);
+	while (str[i] != '\0')
+	{
+		while (str[i + j] == to_find[j])
+		{
+			if (j == size - 1)
+				return ((char *)str + i);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return (0);
+}

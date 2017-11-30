@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 01:57:16 by jolabour          #+#    #+#             */
-/*   Updated: 2017/11/30 08:25:33 by jolabour         ###   ########.fr       */
+/*   Created: 2017/11/10 02:31:00 by jolabour          #+#    #+#             */
+/*   Updated: 2017/11/10 06:44:11 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
+int		ft_strcmp(char const *s1, char const *s2)
+{
+	int				i;
+	unsigned char	*new_s1;
+	unsigned char	*new_s2;
 
-# include "./libft/libft.h"
-# include <fcntl.h>
-# define BUF_SIZE 21
-
-//typedef struct	s_list1
-//{
-//	char	**tab;
-//	int		x;
-//	int		y;
-//	t_list	*next;
-//}				t_list1;
-
-int					test(char **argv);
-int					ft_check_validity(char *str);
-int					ft_check_tetra(char *str, const int tab[19][3]);
-#endif
+	new_s1 = (unsigned char *)s1;
+	new_s2 = (unsigned char *)s2;
+	i = 0;
+	while (new_s1[i] || new_s2[i])
+	{
+		if (new_s1[i] == new_s2[i])
+			i++;
+		else
+			return (new_s1[i] - new_s2[i]);
+	}
+	return (0);
+}

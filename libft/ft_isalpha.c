@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 01:57:16 by jolabour          #+#    #+#             */
-/*   Updated: 2017/11/30 08:25:33 by jolabour         ###   ########.fr       */
+/*   Created: 2017/11/10 02:28:46 by jolabour          #+#    #+#             */
+/*   Updated: 2017/11/10 02:28:49 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
-
-# include "./libft/libft.h"
-# include <fcntl.h>
-# define BUF_SIZE 21
-
-//typedef struct	s_list1
-//{
-//	char	**tab;
-//	int		x;
-//	int		y;
-//	t_list	*next;
-//}				t_list1;
-
-int					test(char **argv);
-int					ft_check_validity(char *str);
-int					ft_check_tetra(char *str, const int tab[19][3]);
-#endif
+int		ft_isalpha(int c)
+{
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	else
+		return (0);
+}

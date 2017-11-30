@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 01:57:16 by jolabour          #+#    #+#             */
-/*   Updated: 2017/11/30 08:25:33 by jolabour         ###   ########.fr       */
+/*   Created: 2017/11/10 04:33:07 by jolabour          #+#    #+#             */
+/*   Updated: 2017/11/10 04:41:54 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <fcntl.h>
-# define BUF_SIZE 21
+char		*ft_strncat(char *dest, char const *src, size_t n)
+{
+	size_t i;
+	size_t size;
 
-//typedef struct	s_list1
-//{
-//	char	**tab;
-//	int		x;
-//	int		y;
-//	t_list	*next;
-//}				t_list1;
-
-int					test(char **argv);
-int					ft_check_validity(char *str);
-int					ft_check_tetra(char *str, const int tab[19][3]);
-#endif
+	i = 0;
+	size = 0;
+	while (dest[size])
+		size++;
+	while (src[i] && i < n)
+	{
+		dest[size + i] = src[i];
+		i++;
+	}
+	dest[size + i] = '\0';
+	return (dest);
+}

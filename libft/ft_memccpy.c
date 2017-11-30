@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 01:57:16 by jolabour          #+#    #+#             */
-/*   Updated: 2017/11/30 08:25:33 by jolabour         ###   ########.fr       */
+/*   Created: 2017/11/10 08:00:44 by jolabour          #+#    #+#             */
+/*   Updated: 2017/11/20 06:56:41 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <fcntl.h>
-# define BUF_SIZE 21
+void	*ft_memccpy(void *dest, void const *src, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	*sr;
+	unsigned char	*des;
 
-//typedef struct	s_list1
-//{
-//	char	**tab;
-//	int		x;
-//	int		y;
-//	t_list	*next;
-//}				t_list1;
-
-int					test(char **argv);
-int					ft_check_validity(char *str);
-int					ft_check_tetra(char *str, const int tab[19][3]);
-#endif
+	i = 0;
+	sr = (unsigned char *)src;
+	des = (unsigned char *)dest;
+	while (i < n)
+	{
+		des[i] = sr[i];
+		if (sr[i] == (unsigned char)c)
+			return (dest + i + 1);
+		i++;
+		if ((unsigned char)c == '\0' && sr[i] == '\0')
+			return (dest + i + 1);
+	}
+	return (NULL);
+}

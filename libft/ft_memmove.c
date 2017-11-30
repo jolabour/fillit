@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 01:57:16 by jolabour          #+#    #+#             */
-/*   Updated: 2017/11/30 08:25:33 by jolabour         ###   ########.fr       */
+/*   Created: 2017/11/12 02:05:27 by jolabour          #+#    #+#             */
+/*   Updated: 2017/11/12 07:05:38 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLIT_H
-# define FILLIT_H
+#include "libft.h"
 
-# include "./libft/libft.h"
-# include <fcntl.h>
-# define BUF_SIZE 21
+void	*ft_memmove(void *dest, void const *src, size_t n)
+{
+	unsigned char		*des;
+	unsigned char		*sr;
+	int					i;
+	int					nb;
 
-//typedef struct	s_list1
-//{
-//	char	**tab;
-//	int		x;
-//	int		y;
-//	t_list	*next;
-//}				t_list1;
-
-int					test(char **argv);
-int					ft_check_validity(char *str);
-int					ft_check_tetra(char *str, const int tab[19][3]);
-#endif
+	sr = (unsigned char *)src;
+	nb = (int)n;
+	i = 0;
+	des = (unsigned char *)dest;
+	if (sr >= des)
+		while (i < nb)
+		{
+			des[i] = sr[i];
+			i++;
+		}
+	else
+		while (nb > 0)
+		{
+			des[nb - 1] = sr[nb - 1];
+			nb--;
+		}
+	return (dest);
+}
