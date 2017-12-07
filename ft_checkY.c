@@ -6,14 +6,14 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 01:43:50 by ymarcill          #+#    #+#             */
-/*   Updated: 2017/11/30 09:31:55 by jolabour         ###   ########.fr       */
+/*   Updated: 2017/12/07 10:07:45 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
 
-static const int tab[19][3] =
+static int tab[19][3] =
 {
 	{5,6,10},
 	{4,5,10},
@@ -36,7 +36,7 @@ static const int tab[19][3] =
 	{3,4,5},
 };
 
-int		ft_check_validity(char *str)
+int		ft_check_validity(char *str, int n)
 {
 	int i;
 	unsigned int points;
@@ -60,19 +60,22 @@ int		ft_check_validity(char *str)
 			return (0);
 		if (str[i] != '#' && str[i] != '.' && str[i] != '\n')
 			return (0);
+		if (n == 1)
+		{
+			if (str[20] != '\0')
+				return (0);
+		}
 		i++;
 	}
-	if ((i == 20 && str[20] != '\0') || (i == 21 && str[20] != '\n' && str[21] != '\0'))
+	if (str[20] == '\n' && str[21] != '\0')
 		return (0);
 	return (1);
 }
 
 int		ft_check_tetra(char *str, const int tab[19][3])
 {
-	int	i;
 	int x;
 	int j;
-	int n;
 
 	x = 0;
 	j = 0;
@@ -87,42 +90,94 @@ int		ft_check_tetra(char *str, const int tab[19][3])
 	return (0);
 }
 
-int		main(int argc, char **argv)
+int		ft_stock_tetra(char *str, int tab[19][3])
+{
+	int x;
+	int j;
+
+	x = 0;
+	j = 0;
+	while (str[x] != '#' && str[x])
+		x++;
+	while (j < 19)
+	{
+		if (str[x + tab[j][0]] == '#' && str[x + tab[j][1]] == '#' && str[x + tab[j][2]] == '#')
+			return (j);
+		j++;
+	}
+	return (0);
+}
+
+int		ft_check(int argc, char **argv)
 {
 	int i;
 	char buf[BUF_SIZE + 1];
 	int fd;
 	int x;
+	int n;
+	int **tab_int;
+	int j;
+	int a;
+	int z;
 
+	j = 0;
 	x = 0;
+	n = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
 		ft_putendl("error");
 		return (0);
 	}
-	if (argc == 2)
-	{	
+	if (argc != 2)
+		ft_putendl("usage: ./fillit target_file");
+	else
+	{
+		while ((i = read(fd, buf, BUF_SIZE)) > 0)
+			n++;
+		i = 0;
+		if (!(tab_int = (int **)malloc(sizeof(int *) * n )))
+			return (0);
+		close(fd);
+		fd = open(argv[1], O_RDONLY);
 		while ((i = read(fd, buf, BUF_SIZE)) > 0)
 		{
 			buf[i] = '\0';
-			if (ft_check_validity(buf))
+			if (!ft_check_validity(buf, n) || !ft_check_tetra(buf, tab))
+				return (0);
+			tab_int[j] = (int *)malloc(sizeof(int) * 3);
+			a = 0;
+			while (a < 3)
 			{
-				if ((ft_check_tetra(buf, tab)))
-					x = 1;
-				else
-					x = 0;
+				tab_int[j][a] = tab[ft_stock_tetra(buf, tab)][a];
+				a++;
 			}
-			else
-				x = -1;
+			n--;
+			j++;
 		}
-//		if (i == 0)
-//			x = -2;
-		printf("%d", x);
 	}
-	else
-		ft_putendl("usage: ./fillit target_file");
+	z = 0;
+	while (z < j)
+	{
+		a = 0;
+		while (a < 3)
+		{
+	//ft_putnbr(j);
+			ft_putnbr(tab_int[z][a]);
+			ft_putchar('\n');
+			a++;
+		}
+		ft_putchar('\n');
+		z++;
+	}
 	if (close(fd) == -1)
 		ft_putendl("error");
+	return (1);
+}
+
+int		main(int argc, char **argv)
+{
+	ft_check(argc, argv);
 	return (0);
+		ft_putendl("usage: ./fillit target_file");
 }
