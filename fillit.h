@@ -6,7 +6,7 @@
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 01:57:16 by jolabour          #+#    #+#             */
-/*   Updated: 2017/12/01 09:12:06 by jolabour         ###   ########.fr       */
+/*   Updated: 2017/12/10 02:06:20 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,8 @@
 int					test(char **argv);
 int					ft_check_validity(char *str, int n);
 int					ft_check_tetra(char *str, const int tab[19][3]);
+int					ft_stock_tetra(char *str, const int tab[19][3]);
+int					ft_count_tetra(int fd, char *buf);
+int					**ft_check(int argc, char **argv);
+
 #endif

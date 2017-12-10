@@ -6,7 +6,7 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 01:43:50 by ymarcill          #+#    #+#             */
-/*   Updated: 2017/12/07 10:07:45 by jolabour         ###   ########.fr       */
+/*   Updated: 2017/12/10 02:06:42 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int		ft_check_validity(char *str, int n)
 	i = 0;
 	while (str[i])
 	{
-		if (str[0] != '#' && str[0] != '.')
-			return (0);
 		if (str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != 
 				'\n')
 			return (0);
@@ -90,7 +88,7 @@ int		ft_check_tetra(char *str, const int tab[19][3])
 	return (0);
 }
 
-int		ft_stock_tetra(char *str, int tab[19][3])
+int		ft_stock_tetra(char *str, const int tab[19][3])
 {
 	int x;
 	int j;
@@ -108,7 +106,18 @@ int		ft_stock_tetra(char *str, int tab[19][3])
 	return (0);
 }
 
-int		ft_check(int argc, char **argv)
+int		ft_count_tetra(int fd, char *buf)
+{
+	int i;
+	int n;
+
+	n = 0;
+	while ((i = read(fd, buf, BUF_SIZE)) > 0)
+		n++;
+	return (n);
+}
+
+int		**ft_check(int argc, char **argv)
 {
 	int i;
 	char buf[BUF_SIZE + 1];
@@ -122,7 +131,6 @@ int		ft_check(int argc, char **argv)
 
 	j = 0;
 	x = 0;
-	n = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
@@ -133,10 +141,9 @@ int		ft_check(int argc, char **argv)
 		ft_putendl("usage: ./fillit target_file");
 	else
 	{
-		while ((i = read(fd, buf, BUF_SIZE)) > 0)
-			n++;
+		n = ft_count_tetra(fd, buf);
 		i = 0;
-		if (!(tab_int = (int **)malloc(sizeof(int *) * n )))
+		if (!(tab_int = (int **)malloc(sizeof(int *) * (n + 1))))
 			return (0);
 		close(fd);
 		fd = open(argv[1], O_RDONLY);
@@ -155,29 +162,9 @@ int		ft_check(int argc, char **argv)
 			n--;
 			j++;
 		}
-	}
-	z = 0;
-	while (z < j)
-	{
-		a = 0;
-		while (a < 3)
-		{
-	//ft_putnbr(j);
-			ft_putnbr(tab_int[z][a]);
-			ft_putchar('\n');
-			a++;
-		}
-		ft_putchar('\n');
-		z++;
+		tab_int[j] = 0;
 	}
 	if (close(fd) == -1)
 		ft_putendl("error");
-	return (1);
-}
-
-int		main(int argc, char **argv)
-{
-	ft_check(argc, argv);
-	return (0);
-		ft_putendl("usage: ./fillit target_file");
+	return (tab_int);
 }
