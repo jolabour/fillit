@@ -6,7 +6,7 @@
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 01:51:03 by jolabour          #+#    #+#             */
-/*   Updated: 2017/12/11 08:22:21 by jolabour         ###   ########.fr       */
+/*   Updated: 2017/12/12 02:09:46 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		ft_put_tetra(int pos, int l, int x, char *map, int **tab_int, int i)
 {
 	if (tab_int[i] == 0)
 		return (1);
-	ft_putendl(map);
+	//ft_putendl(map);
 	if (map[pos] == '\0')
 		return (ft_put_tetra(0, l + 1, x + 1, ft_map(l + 1, map), tab_int, 0));
 	if (map[pos] != '.')
@@ -119,8 +119,8 @@ int		main(int argc, char **argv)
 	int i;
 
 	pos = 0;
-	a = 2;
-	x = -2;
+	a = 4;
+	x = 0;
 	map = ft_map(a, map);
 	tab = ft_check(argc, argv);
 	/*z = 0;
