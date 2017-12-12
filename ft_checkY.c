@@ -6,14 +6,14 @@
 /*   By: ymarcill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 01:43:50 by ymarcill          #+#    #+#             */
-/*   Updated: 2017/12/10 02:06:42 by jolabour         ###   ########.fr       */
+/*   Updated: 2017/12/12 04:54:16 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
 
-static int tab[19][3] =
+static const int tab[19][3] =
 {
 	{5,6,10},
 	{4,5,10},
@@ -132,13 +132,11 @@ int		**ft_check(int argc, char **argv)
 	j = 0;
 	x = 0;
 	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
+	if (argc != 2 || fd == -1)
 	{
-		ft_putendl("error");
+		ft_putendl("usage: ./fillit target_file");
 		return (0);
 	}
-	if (argc != 2)
-		ft_putendl("usage: ./fillit target_file");
 	else
 	{
 		n = ft_count_tetra(fd, buf);
@@ -151,7 +149,10 @@ int		**ft_check(int argc, char **argv)
 		{
 			buf[i] = '\0';
 			if (!ft_check_validity(buf, n) || !ft_check_tetra(buf, tab))
+			{
+				ft_putendl("map invalid");
 				return (0);
+			}
 			tab_int[j] = (int *)malloc(sizeof(int) * 3);
 			a = 0;
 			while (a < 3)

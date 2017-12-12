@@ -6,7 +6,7 @@
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 01:51:03 by jolabour          #+#    #+#             */
-/*   Updated: 2017/12/12 02:09:46 by jolabour         ###   ########.fr       */
+/*   Updated: 2017/12/12 06:20:51 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,36 +77,46 @@ int		ft_check_x2(int **tab, int x, int i)
 
 int		ft_put_tetra(int pos, int l, int x, char *map, int **tab_int, int i)
 {
+	int j;
+	j = 0;
 	if (tab_int[i] == 0)
 		return (1);
+	if (map[pos] == '\0' && i == 0)
+		return (ft_put_tetra(0, l + 1, x + 1, ft_map(l + 1, map), tab_int, 0));
 	//ft_putendl(map);
 	if (map[pos] == '\0')
-		return (ft_put_tetra(0, l + 1, x + 1, ft_map(l + 1, map), tab_int, 0));
+	{
+		//ft_putendl("mdr");
+		return (0);
+	}
 	if (map[pos] != '.')
 		return (ft_put_tetra(pos + 1, l, x, map, tab_int, i));
 	map[pos] = 'A' + i;
-	if (map[pos + (ft_check_x0(tab_int, x, i))] == '.' && map[pos + (ft_check_x1(tab_int, x, i))] == '.' && map[pos + (ft_check_x2(tab_int, x, i))] == '.')
+	while (map[pos])
 	{
-		map[pos + (ft_check_x0(tab_int, x, i))] = 'A' + i;
-		//ft_putnbr(ft_check_x0(tab_int, x, i));
-		map[pos + (ft_check_x1(tab_int, x, i))] = 'A' + i;
-		//ft_putnbr(ft_check_x1(tab_int, x, i));
-		map[pos + (ft_check_x2(tab_int, x, i))] = 'A' + i;
-		//ft_putnbr(ft_check_x2(tab_int, x, i));
-		if (ft_put_tetra(0, l, x, map, tab_int, i + 1))
-			return (1);
-	}
-	map[pos] = '.';
-	if (map[pos + (ft_check_x0(tab_int, x, i))] != '.' || map[pos + (ft_check_x1(tab_int, x, i))] != '.' || map[pos + (ft_check_x2(tab_int, x, i))] != '.')
-	{
-		ft_putendl("ah");
+		if (map[pos + (ft_check_x0(tab_int, x, i))] == '.' && map[pos + (ft_check_x1(tab_int, x, i))] == '.' && map[pos + (ft_check_x2(tab_int, x, i))] == '.')
+		{
+			map[pos + (ft_check_x0(tab_int, x, i))] = 'A' + i;
+			//ft_putnbr(ft_check_x0(tab_int, x, i));
+			map[pos + (ft_check_x1(tab_int, x, i))] = 'A' + i;
+			//ft_putnbr(ft_check_x1(tab_int, x, i));
+			map[pos + (ft_check_x2(tab_int, x, i))] = 'A' + i;
+			//ft_putnbr(i);
+				if (ft_put_tetra(0 , l, x, map, tab_int, i + 1))
+					return (1);
+		}
+		map[pos] = '.';
+		j = 0;
+		while (map[j])
+		{
+			if (map[j] == 'A' + i)
+				map[j] = '.';
+			j++;
+		}
 		return (ft_put_tetra(pos + 1, l, x, map, tab_int, i));
 	}
-	ft_putendl("mdr");
 	return (0);
 }
-
-
 
 int		main(int argc, char **argv)
 {
@@ -144,5 +154,3 @@ int		main(int argc, char **argv)
 	//ft_putstr(ft_map(a));
 	return (0);
 }
-
-
