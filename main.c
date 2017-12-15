@@ -6,36 +6,35 @@
 /*   By: jolabour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 01:51:03 by jolabour          #+#    #+#             */
-/*   Updated: 2017/12/12 06:20:51 by jolabour         ###   ########.fr       */
+/*   Updated: 2017/12/15 03:06:12 by jolabour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-char	*ft_map(int l, char *map)
+void	ft_map(int l, char **map)
 {
 	int i;
 	int n;
-	char *new_map;
 
 	n = 1;
 	i = 0;
-	free(map);
-	if (!(new_map = (char *)malloc(sizeof(char) * (((l + 1) * l) + 1))))
-		return (NULL);
+	//free(map);
+	if (!(*map = (char *)malloc(sizeof(char) * (((l * l) + l) + 1))))
+		return ;
 	while (i < ((l + 1) * l))
 	{
 		if (i + 1 == ((((l + 1) * l) / l) * n))
 		{
-			new_map[i] = '\n';
+			(*map)[i] = '\n';
 			n++;
 		}
 		else
-			new_map[i] = '.';
+			(*map)[i] = '.';
 		i++;
 	}
-	new_map[i] = '\0';
-	return (new_map);
+	(*map)[i] = '\0';
+	//ft_putstr(map);
 }
 
 int		ft_check_x0(int **tab, int x, int i)
@@ -75,82 +74,61 @@ int		ft_check_x2(int **tab, int x, int i)
 	return (tab[i][2] + (n * x));
 }
 
-int		ft_put_tetra(int pos, int l, int x, char *map, int **tab_int, int i)
+int		ft_put_tetra(int pos, int l, int x, char **map, int **tab_int, int i)
 {
 	int j;
-	j = 0;
+
 	if (tab_int[i] == 0)
 		return (1);
-	if (map[pos] == '\0' && i == 0)
-		return (ft_put_tetra(0, l + 1, x + 1, ft_map(l + 1, map), tab_int, 0));
-	//ft_putendl(map);
-	if (map[pos] == '\0')
+	if ((*map)[pos] == '\0')
 	{
-		//ft_putendl("mdr");
-		return (0);
+		if (i != 0)
+			return (0);
+		l++;
+		free(*map);
+		ft_map(l, map);
+		return (ft_put_tetra(0, l, x + 1, map, tab_int, 0));
 	}
-	if (map[pos] != '.')
-		return (ft_put_tetra(pos + 1, l, x, map, tab_int, i));
-	map[pos] = 'A' + i;
-	while (map[pos])
+	if ((*map)[pos + (ft_check_x0(tab_int, x, i))] == '.' && (*map)[pos + (ft_check_x1(tab_int, x, i))] == '.' && (*map)[pos + (ft_check_x2(tab_int, x, i))] == '.' && (*map)[pos] == '.')
 	{
-		if (map[pos + (ft_check_x0(tab_int, x, i))] == '.' && map[pos + (ft_check_x1(tab_int, x, i))] == '.' && map[pos + (ft_check_x2(tab_int, x, i))] == '.')
-		{
-			map[pos + (ft_check_x0(tab_int, x, i))] = 'A' + i;
-			//ft_putnbr(ft_check_x0(tab_int, x, i));
-			map[pos + (ft_check_x1(tab_int, x, i))] = 'A' + i;
-			//ft_putnbr(ft_check_x1(tab_int, x, i));
-			map[pos + (ft_check_x2(tab_int, x, i))] = 'A' + i;
-			//ft_putnbr(i);
-				if (ft_put_tetra(0 , l, x, map, tab_int, i + 1))
-					return (1);
-		}
-		map[pos] = '.';
+		(*map)[pos] = 'A' + i;
+		(*map)[pos + (ft_check_x0(tab_int, x, i))] = 'A' + i;
+		(*map)[pos + (ft_check_x1(tab_int, x, i))] = 'A' + i;
+		(*map)[pos + (ft_check_x2(tab_int, x, i))] = 'A' + i;
+		if (ft_put_tetra(0 , l, x, map, tab_int, i + 1))
+			return (1);
+		(*map)[pos] = '.';
 		j = 0;
-		while (map[j])
+		while ((*map)[j])
 		{
-			if (map[j] == 'A' + i)
-				map[j] = '.';
+			if ((*map)[j] == 'A' + i)
+				(*map)[j] = '.';
 			j++;
 		}
-		return (ft_put_tetra(pos + 1, l, x, map, tab_int, i));
 	}
-	return (0);
+	return (ft_put_tetra(pos + 1, l, x, map, tab_int, i));
 }
 
-int		main(int argc, char **argv)
-{
-	char *map;
-	int **tab;
-	int z;
-	int a;
-	int x;
-	int pos;
-	int i;
-
-	pos = 0;
-	a = 4;
-	x = 0;
-	map = ft_map(a, map);
-	tab = ft_check(argc, argv);
-	/*z = 0;
-	i = 0;
-	while (tab[z] != 0)
+	int		main(int argc, char **argv)
 	{
-		a = 0;
-		while (a < 3)
-		{
-	//ft_putnbr(j);
-			ft_putnbr(tab[z][a]);
-			ft_putchar('\n');
-			a++;
-		}
-		ft_putchar('\n');
-		z++;
-	}*/
-	//ft_putendl(map);
-	ft_put_tetra(pos, a, x, map, tab, i);
-	ft_putstr(map);
-	//ft_putstr(ft_map(a));
-	return (0);
-}
+		char *map;
+		int **tab;
+		int z;
+		int a;
+		int x;
+		int pos;
+		int i;
+
+		pos = 0;
+		a = 2;
+		x = -2;
+		i = 0;
+		map = NULL;
+		if (!(ft_check(argc, argv)))
+			exit(argc);
+		ft_map(a, &map);
+		tab = ft_check(argc, argv);
+		ft_put_tetra(pos, a, x, &map, tab, i);
+		ft_putstr(map);
+		return (0);
+	}
